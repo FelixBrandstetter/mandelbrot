@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mandelbrot2", "Mandelbrot2\Mandelbrot2.csproj", "{A32B434F-5705-423D-8C31-BE61F64A39D5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "WebApp\WebApp.csproj", "{789FC474-950F-4142-966C-1AFED8CC2EF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MandelbrotLibrary", "MandelbrotLibrary\MandelbrotLibrary.csproj", "{2985E9CC-B3B7-42F6-91FB-9305C325A2B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mandelbrot", "Mandelbrot\Mandelbrot.csproj", "{E86FED98-99E3-4827-8277-F5979C7904BE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A32B434F-5705-423D-8C31-BE61F64A39D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A32B434F-5705-423D-8C31-BE61F64A39D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A32B434F-5705-423D-8C31-BE61F64A39D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A32B434F-5705-423D-8C31-BE61F64A39D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{789FC474-950F-4142-966C-1AFED8CC2EF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{789FC474-950F-4142-966C-1AFED8CC2EF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{789FC474-950F-4142-966C-1AFED8CC2EF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{789FC474-950F-4142-966C-1AFED8CC2EF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2985E9CC-B3B7-42F6-91FB-9305C325A2B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2985E9CC-B3B7-42F6-91FB-9305C325A2B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2985E9CC-B3B7-42F6-91FB-9305C325A2B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2985E9CC-B3B7-42F6-91FB-9305C325A2B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E86FED98-99E3-4827-8277-F5979C7904BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E86FED98-99E3-4827-8277-F5979C7904BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E86FED98-99E3-4827-8277-F5979C7904BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E86FED98-99E3-4827-8277-F5979C7904BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
