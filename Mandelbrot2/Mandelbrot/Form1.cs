@@ -10,34 +10,90 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using NetMQ;
+using NetMQ.Sockets;
+using System.Threading;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Mandelbrot
 {
     public partial class Form1 : Form
     {
         private static readonly HttpClient client = new HttpClient();
+        private List<Result> receivedResults;
 
         public Form1()
         {
             InitializeComponent();
         }
 
-        private async void Form1_Shown(object sender, EventArgs e)
+        private void Form1_Shown(object sender, EventArgs e)
         {
-            Bitmap bm = new Bitmap(pictureBox1.Width, pictureBox1.Height);
 
-            var jsonString = JsonConvert.SerializeObject(new CalcServerInfo(300, 325));
-            var data = new StringContent(jsonString, Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("https://localhost:44392/api/mandelbrot", data);
-            var responseString = await response.Content.ReadAsStringAsync();
-            var convertedResult = JsonConvert.DeserializeObject<List<Result>>(responseString);
+        }
 
-            foreach (var value in convertedResult)
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Thread sink = new Thread(StartSink);
+            sink.Start();
+        }
+
+        private void StartSink()
+        {
+            this.receivedResults = new List<Result>();
+
+            using (var receiver = new PullSocket("@tcp://localhost:400"))
             {
-                bm.SetPixel(value.X, value.Y, value.Iteration < 100 ? Color.Black : Color.White);
+                for (int taskNumber = 0; taskNumber < 400; taskNumber = taskNumber + 10)
+                {
+                    var workerDoneTrigger = receiver.ReceiveFrameBytes();
+                    List<Result> gameField = null;
+                    BinaryFormatter binaryFormatter2 = new BinaryFormatter();
+
+                    using (var memoryStream2 = new MemoryStream(workerDoneTrigger))
+                    {
+                        gameField = (List<Result>)binaryFormatter2.Deserialize(memoryStream2);
+                        this.receivedResults.AddRange(gameField);
+                    }
+                }
+            }
+
+            Bitmap bm = new Bitmap(400, 400);
+
+            foreach (var item in this.receivedResults)
+            {
+                bm.SetPixel(item.X, item.Y, item.Iteration < 100 ? Color.Black : Color.White);
             }
 
             pictureBox1.Image = bm;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                using (var sender = new PushSocket("@tcp://localhost:8081"))
+                using (var sink = new PullSocket(">tcp://localhost:8080"))
+                {
+                    Thread.Sleep(1000);
+
+                    int upper = 10;
+                    int height = 400;
+                    for (int lower = 0; lower < height; lower += 10)
+                    {
+
+                        sender.SendFrame(lower + "," + upper + "," + height);
+                        upper += 10;
+
+                    }
+                }
+            });
         }
     }
 }

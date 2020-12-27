@@ -2,6 +2,7 @@
 
 namespace MandelbrotLibrary
 {
+    [Serializable]
     public class Result
     {
         public Result(int x, int y, int iteration)
